@@ -1,137 +1,175 @@
 package com.mustafasevgi.socialcaps;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-
-import android.net.Uri;
+import android.content.res.Configuration;
 import android.os.Bundle;
-import android.app.Activity;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.widget.DrawerLayout;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.ExpandableListView;
+import android.widget.LinearLayout;
 
-import com.soundcloud.android.crop.Crop;
+import com.mustafasevgi.socialcaps.event_model.LeftGroupImageClickModel;
+import com.squareup.otto.Subscribe;
 
-public class MainActivity extends Activity {
 
-    Button btnLoadImage1;
-    TextView textSource1;
-    EditText editTextCaption;
-    Button btnProcessing;
-    ImageView imageResult;
-    AutoScaleTextView textResult;
-    Uri outputUri;
-
-    final int REQUEST_PICK = Crop.REQUEST_PICK;
-    final int REQUEST_CROP = Crop.REQUEST_CROP;
-
-    Uri source1;
+public class MainActivity extends BaseActionBarActivity implements ExpandableListView.OnGroupClickListener, ExpandableListView.OnChildClickListener {
+    // left menudeki itemlarin tutuldugu liste
+    // left menudeki itemlari gosteren listview
+    private ExpandableListView drawerListView;
+    private DrawerLayout drawerLayout;
+    private ActionBarDrawerToggle actionBarDrawerToggle;
+    private Fragment fragment = null;
+    private LinearLayout linearLayout;
+    private static int previousPosition = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        // get list items from strings.xml
+        linearLayout = (LinearLayout) findViewById(R.id.linearLayout);
+        // get ListView defined in activity_main.xml
+        drawerListView = (ExpandableListView) findViewById(R.id.left_drawer_list);
+        drawerListView.setGroupIndicator(null);
+        // App Icon
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        NavigationDrawerExpandableListViewAdapter adapter = new NavigationDrawerExpandableListViewAdapter(this);
+//        NavigationDrawerAdapter adapter = new NavigationDrawerAdapter(this, R.layout.navigation_drawer_item, drawerListViewItems);
+        // Set the adapter for the list view
+        drawerListView.setAdapter(adapter);
+        drawerListView.setOnGroupClickListener(this);
+        drawerListView.setOnChildClickListener(this);
+        fragment = new FragmentTimeLine();
+        setDrawerLayout(0);
 
-        btnLoadImage1 = (Button) findViewById(R.id.loadimage1);
-        textSource1 = (TextView) findViewById(R.id.sourceuri1);
-        editTextCaption = (EditText) findViewById(R.id.caption);
-        btnProcessing = (Button) findViewById(R.id.processing);
-        imageResult = (ImageView) findViewById(R.id.result);
+//        // left menudeki itemlarin click yakalar.
+//        drawerListView.setOnItemClickListener(new ListView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView parent, View view, int position, long id) {
+//                // TODO Auto-generated method stub
+//
+//                switch (position) {
+//                    case 0:
+//                        fragment = new FragmentAktuel();
+//                        break;
+////                    case 1:
+////                        fragment = new FragmentEskiAktuel();
+////                        break;
+//
+//                    default:
+//                        break;
+//                }
+//                setDrawerLayout(position);
+//            }
+//
+//        });
+        actionBarDrawerToggle = new ActionBarDrawerToggle(this, /* host Activity */
+                drawerLayout, /* DrawerLayout object */
+                R.drawable.ic_drawer, /* nav drawer icon to replace 'Up' caret */
+                R.string.navigation_drawer_open, /* "open drawer" description */
+                R.string.navigation_drawer_close /* "close drawer" description */
+        );
 
-        textResult = (AutoScaleTextView) findViewById(R.id.resulttext);
+        // Set actionBarDrawerToggle as the DrawerListener
+        drawerLayout.setDrawerListener(actionBarDrawerToggle);
 
-        btnLoadImage1.setOnClickListener(new OnClickListener() {
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-            @Override
-            public void onClick(View arg0) {
-                Crop.pickImage(MainActivity.this);
-            }
-        });
-
-        btnProcessing.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-                if (source1 != null) {
-                    Bitmap processedBitmap = ProcessingBitmap();
-                    if (processedBitmap != null) {
-                        imageResult.setImageBitmap(processedBitmap);
-                        Toast.makeText(getApplicationContext(),
-                                "Done",
-                                Toast.LENGTH_LONG).show();
-                    } else {
-                        Toast.makeText(getApplicationContext(),
-                                "Something wrong in processing!",
-                                Toast.LENGTH_LONG).show();
-                    }
-                } else {
-                    Toast.makeText(getApplicationContext(),
-                            "Select both image!",
-                            Toast.LENGTH_LONG).show();
-                }
-
-            }
-        });
+        // just styling option add shadow the right edge of the drawer
+        // drawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK) {
-            switch (requestCode) {
-                case 9162:
-                    beginCrop(data.getData());
-                    textSource1.setText(data.getData().toString());
-                    break;
-                case 6709:
-                    handleCrop(resultCode);
-                    break;
-            }
-        }
+    protected void onRestart() {
+        super.onRestart();
+
     }
 
-    private Bitmap ProcessingBitmap() {
-        Bitmap newBitmap = null;
-
-        try {
-            newBitmap = BitmapFactory.decodeStream(
-                    getContentResolver().openInputStream(source1));
-
-            String captionString = editTextCaption.getText().toString();
-            if (captionString != null) {
-
-                textResult.setText(captionString);
-
-            } else {
-                Toast.makeText(getApplicationContext(),
-                        "caption empty!",
-                        Toast.LENGTH_LONG).show();
-            }
-
-        } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-
-        return newBitmap;
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 
-    private void beginCrop(Uri source) {
-        outputUri = Uri.fromFile(new File(getCacheDir(), "cropped"));
-        new Crop(source).output(outputUri).asSquare().start(MainActivity.this);
+    public void setDrawerLayout(int position) {
+        if (fragment != null) {
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+
+            // update selected item and title, then close the drawer
+            drawerListView.setItemChecked(position, true);
+            drawerListView.setSelection(position);
+            setTitle("Kitap");
+        }
+        drawerLayout.closeDrawer(linearLayout);
     }
 
-    private void handleCrop(int resultCode) {
-        if (resultCode == RESULT_OK && outputUri != null) {
-            source1 = outputUri;
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        actionBarDrawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        // call ActionBarDrawerToggle.onOptionsItemSelected(), if it returns true
+        // then it has handled the app icon touch event
+        if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
         }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    // swipe edilince app icon yanndaki simgenin degismesini sagliyor
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+        actionBarDrawerToggle.syncState();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+//        selectItem(groupPosition);
+        switch (groupPosition) {
+            case 0:
+                fragment = new FragmentTimeLine();
+                break;
+            default:
+                break;
+        }
+        setDrawerLayout(groupPosition);
+        return true;
+    }
+
+    @Override
+    public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+
+        return false;
+    }
+
+    @Subscribe
+    public void onGroupIconClick(LeftGroupImageClickModel leftGroupImageClickModel) {
+        int position = leftGroupImageClickModel.getGroupPosition();
+        if (!drawerListView.isGroupExpanded(position)) {
+            drawerListView.collapseGroup(previousPosition);
+            drawerListView.expandGroup(position, true);
+        } else
+            drawerListView.collapseGroup(position);
+        previousPosition = position;
     }
 }

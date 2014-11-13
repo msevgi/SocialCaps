@@ -1,63 +1,54 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".MainActivity">
-
-
-    <Button
-        android:id="@+id/loadimage1"
+    android:layout_height="match_parent">
+    <!-- The main content view -->
+    <FrameLayout
+        android:id="@+id/content_frame"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Select Image" />
+        android:layout_height="match_parent" />
+    <!-- The navigation drawer -->
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:orientation="vertical"
+        android:layout_width="240dp"
+        android:layout_height="match_parent"
+        android:background="#36647F"
+        android:layout_gravity="start">
 
-    <TextView
-        android:id="@+id/sourceuri1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
 
-    <EditText
-        android:id="@+id/caption"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/profile_image"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/profile_my"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            app:border_width="1dp"
+            app:border_color="#FF000000" />
 
-    <Button
-        android:id="@+id/processing"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Make Caps" />
+        <TextView
+            android:id="@+id/textview_username_left"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:padding="10dp"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:text="Mustafa Sevgi" />
 
-    <RelativeLayout
-        android:id="@+id/imagelayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <ImageView
-            android:id="@+id/result"
+        <ExpandableListView
+            android:id="@+id/left_drawer_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_alignParentTop="true" />
 
-        <com.mustafasevgi.socialcaps.AutoScaleTextView
-            android:id="@+id/resulttext"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:textSize="14sp"
-            android:textColor="#ffffff"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_alignLeft="@id/result"
-            android:layout_alignRight="@id/result"
-            android:layout_alignBottom="@id/result"
-            android:layout_above="@id/result"
-            android:gravity="center"
-            android:background="@android:color/holo_red_dark"
-            android:text="deneme" />
-    </RelativeLayout>
+            android:background="#36647F"
+            android:choiceMode="singleChoice"
+            android:divider="#F2AE72"
+            android:dividerHeight="1dp"
+            android:childDivider="#F2AE72" />
+    </LinearLayout>
 
-</LinearLayout>
+
+</android.support.v4.widget.DrawerLayout>

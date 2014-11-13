@@ -1,11 +1,11 @@
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 21
-    buildToolsVersion "21.1.0"
+    buildToolsVersion "21.0.2"
 
     defaultConfig {
-        applicationId "com.mustafasevgi.socialcaps"
+        applicationId "com.baoyz.widget"
         minSdkVersion 15
         targetSdkVersion 21
         versionCode 1
@@ -13,7 +13,7 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            runProguard false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -21,11 +21,6 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile project(":crop_image_library")
-    compile project(":library")
     compile 'com.android.support:support-v4:21.0.0'
     compile "com.android.support:appcompat-v7:21.0.0"
-    compile 'com.squareup:otto:1.3.5'
-    compile 'de.hdodenhof:circleimageview:1.2.0'
-    compile 'com.melnykov:floatingactionbutton:1.0.6'
 }
