@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp">
+
+    <com.melnykov.fab.FloatingActionButton
+
+        xmlns:fab="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/fab_done"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+
+        android:src="@drawable/ic_action_content_new"
+        fab:fab_colorNormal="#2879A9"
+        fab:fab_colorPressed="#0000dd"
+        fab:fab_colorRipple="#00000f" />
+
+    <RelativeLayout
+        android:id="@+id/imagelayout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <ImageView
+            android:id="@+id/imageview_caps"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true" />
+
+        <EditText
+            android:id="@+id/edittext_caps"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:visibility="gone"
+            android:layout_marginBottom="10dp"
+            android:layout_alignLeft="@id/imageview_caps"
+            android:layout_alignRight="@id/imageview_caps"
+            android:layout_alignBottom="@id/imageview_caps"
+            android:layout_above="@id/result"
+            android:gravity="center"
+            android:background="@android:color/holo_red_dark"
+            android:textSize="14sp"
+            android:textColor="#ffffff" />
+    </RelativeLayout>
+
+</LinearLayout>

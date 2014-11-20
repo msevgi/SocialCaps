@@ -1,14 +1,15 @@
 package com.mustafasevgi.socialcaps;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-
-import android.net.Uri;
-import android.os.Bundle;
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.Rect;
+import android.graphics.RectF;
+import android.graphics.Typeface;
+import android.net.Uri;
+import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -19,15 +20,18 @@ import android.widget.Toast;
 
 import com.soundcloud.android.crop.Crop;
 
-public class CreateImageActivity extends Activity {
+import java.io.File;
+import java.io.FileNotFoundException;
 
-    Button btnLoadImage1;
-    TextView textSource1;
-    EditText editTextCaption;
-    Button btnProcessing;
-    ImageView imageResult;
-    AutoScaleTextView textResult;
-    Uri outputUri;
+public class CreateCapsActivity extends BaseActionBarActivity {
+
+    private Button btnLoadImage1;
+    private TextView textSource1;
+    private EditText editTextCaption;
+    private Button btnProcessing;
+    private ImageView imageResult;
+    private AutoScaleTextView textResult;
+    private Uri outputUri;
 
     final int REQUEST_PICK = Crop.REQUEST_PICK;
     final int REQUEST_CROP = Crop.REQUEST_CROP;
@@ -51,7 +55,7 @@ public class CreateImageActivity extends Activity {
 
             @Override
             public void onClick(View arg0) {
-                Crop.pickImage(CreateImageActivity.this);
+                Crop.pickImage(CreateCapsActivity.this);
             }
         });
 
@@ -99,10 +103,10 @@ public class CreateImageActivity extends Activity {
     }
 
     private Bitmap ProcessingBitmap() {
-        Bitmap newBitmap = null;
-
+        Bitmap meme_image = null;
+        Bitmap bitmap = null;
         try {
-            newBitmap = BitmapFactory.decodeStream(
+            meme_image = BitmapFactory.decodeStream(
                     getContentResolver().openInputStream(source1));
 
             String captionString = editTextCaption.getText().toString();
@@ -115,18 +119,39 @@ public class CreateImageActivity extends Activity {
                         "caption empty!",
                         Toast.LENGTH_LONG).show();
             }
+            Typeface typeface = Typeface.createFromAsset(getAssets(),
+                    "androidnation.ttf");
+            Paint mTextPaintOutline;
+            PaintStyle paintstyle = new PaintStyle(typeface);
+            textResult.buildDrawingCache();
+            Bitmap bitmapEditText = Bitmap.createScaledBitmap(textResult.getDrawingCache(), meme_image.getWidth(), meme_image.getHeight() / 4, true);
+            mTextPaintOutline = paintstyle.getStrokPaint();
+            bitmap = Bitmap.createBitmap(meme_image.getWidth(), meme_image.getHeight(), meme_image.getConfig());
+            Canvas canvas = new Canvas(bitmap);
+            canvas.drawBitmap(meme_image, 0.0F, 0.0F, new Paint());
+            canvas.drawBitmap(bitmapEditText, 0, meme_image.getHeight() - (meme_image.getHeight() / 4), mTextPaintOutline);
+            textResult.setVisibility(View.GONE);
+            imageResult.setImageBitmap(bitmap);
 
         } catch (FileNotFoundException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
-        return newBitmap;
+        return bitmap;
+    }
+
+    public int xBound(float f, Bitmap meme_image) {
+        return (int) (((float) meme_image.getWidth() - f) / 2.0F);
+    }
+
+    public int yBound(Bitmap meme_image) {
+        return -6 + meme_image.getHeight();
     }
 
     private void beginCrop(Uri source) {
         outputUri = Uri.fromFile(new File(getCacheDir(), "cropped"));
-        new Crop(source).output(outputUri).asSquare().start(CreateImageActivity.this);
+        new Crop(source).output(outputUri).asSquare().start(CreateCapsActivity.this);
     }
 
     private void handleCrop(int resultCode) {
