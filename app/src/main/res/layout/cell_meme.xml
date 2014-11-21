@@ -1,0 +1,20 @@
+<merge
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.mustafasevgi.socialcaps.view.SquareImageView
+        android:id="@+id/cell_meme_image"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"/>
+
+    <com.mustafasevgi.socialcaps.view.MyAutoScaleView
+        android:id="@+id/cell_meme_textview"
+        android:layout_width="match_parent"
+        android:layout_gravity="bottom"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:textColor="@android:color/white"
+        android:background="#FF0000"/>
+
+</merge>

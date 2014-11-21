@@ -5,11 +5,11 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.Rect;
-import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.mustafasevgi.socialcaps.view.MemeView;
 import com.soundcloud.android.crop.Crop;
 
 import java.io.File;
@@ -47,10 +48,32 @@ public class CreateCapsActivity extends BaseActionBarActivity {
         textSource1 = (TextView) findViewById(R.id.sourceuri1);
         editTextCaption = (EditText) findViewById(R.id.caption);
         btnProcessing = (Button) findViewById(R.id.processing);
-        imageResult = (ImageView) findViewById(R.id.result);
-
+        imageResult = (ImageView) findViewById(R.id.imageview_caps);
+//        Display display = getWindowManager().getDefaultDisplay();
+//        int screenWidth = display.getWidth();
+//        imageResult.getLayoutParams().width = screenWidth;
+//        imageResult.getLayoutParams().height = screenWidth;
         textResult = (AutoScaleTextView) findViewById(R.id.resulttext);
+        Crop.pickImage(CreateCapsActivity.this);
+        editTextCaption.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
+                Bitmap processedBitmap = ProcessingBitmap();
+                if (processedBitmap != null) {
+                    imageResult.setImageBitmap(processedBitmap);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
         btnLoadImage1.setOnClickListener(new OnClickListener() {
 
             @Override
@@ -84,6 +107,10 @@ public class CreateCapsActivity extends BaseActionBarActivity {
 
             }
         });
+
+        MemeView memeView = (MemeView) findViewById(R.id.test);
+        memeView.setImage(R.drawable.ic_launcher);
+        memeView.setText("Lorem Ipsum cok enterasan devamini bende bilmiyorumg4dyhdhu5 4jhyytrhtrhsegsetrv hstrjhtrsjtrsjhtrs  terahte t jhsjhs   jrjsr  h45hjh");
     }
 
     @Override
@@ -157,6 +184,7 @@ public class CreateCapsActivity extends BaseActionBarActivity {
     private void handleCrop(int resultCode) {
         if (resultCode == RESULT_OK && outputUri != null) {
             source1 = outputUri;
+//            imageResult.setImageURI(outputUri);
         }
     }
 }

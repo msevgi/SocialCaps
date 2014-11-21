@@ -42,7 +42,7 @@
             android:layout_alignLeft="@id/imageview_caps"
             android:layout_alignRight="@id/imageview_caps"
             android:layout_alignBottom="@id/imageview_caps"
-            android:layout_above="@id/result"
+            android:layout_above="@id/imageview_caps"
             android:gravity="center"
             android:background="@android:color/holo_red_dark"
             android:textSize="14sp"
