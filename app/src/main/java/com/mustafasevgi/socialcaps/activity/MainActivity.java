@@ -1,4 +1,4 @@
-package com.mustafasevgi.socialcaps;
+package com.mustafasevgi.socialcaps.activity;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -6,11 +6,15 @@ import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
 
+import com.mustafasevgi.socialcaps.FragmentTimeLine;
+import com.mustafasevgi.socialcaps.NavigationDrawerExpandableListViewAdapter;
+import com.mustafasevgi.socialcaps.R;
 import com.mustafasevgi.socialcaps.event_model.LeftGroupImageClickModel;
 import com.squareup.otto.Subscribe;
 
@@ -24,12 +28,16 @@ public class MainActivity extends BaseActionBarActivity implements ExpandableLis
     private Fragment fragment = null;
     private LinearLayout linearLayout;
     private static int previousPosition = 0;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
         // get list items from strings.xml
+        toolbar = (Toolbar) findViewById(R.id.activity_main_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
         linearLayout = (LinearLayout) findViewById(R.id.linearLayout);
         // get ListView defined in activity_main.xml
         drawerListView = (ExpandableListView) findViewById(R.id.left_drawer_list);
@@ -45,27 +53,6 @@ public class MainActivity extends BaseActionBarActivity implements ExpandableLis
         fragment = new FragmentTimeLine();
         setDrawerLayout(0);
 
-//        // left menudeki itemlarin click yakalar.
-//        drawerListView.setOnItemClickListener(new ListView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView parent, View view, int position, long id) {
-//                // TODO Auto-generated method stub
-//
-//                switch (position) {
-//                    case 0:
-//                        fragment = new FragmentAktuel();
-//                        break;
-////                    case 1:
-////                        fragment = new FragmentEskiAktuel();
-////                        break;
-//
-//                    default:
-//                        break;
-//                }
-//                setDrawerLayout(position);
-//            }
-//
-//        });
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, /* host Activity */
                 drawerLayout, /* DrawerLayout object */
                 R.drawable.ic_drawer, /* nav drawer icon to replace 'Up' caret */
@@ -80,6 +67,11 @@ public class MainActivity extends BaseActionBarActivity implements ExpandableLis
 
         // just styling option add shadow the right edge of the drawer
         // drawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
+    }
+
+    @Override
+    public int getLayoutResource() {
+        return R.layout.activity_main;
     }
 
     @Override
@@ -101,7 +93,7 @@ public class MainActivity extends BaseActionBarActivity implements ExpandableLis
             // update selected item and title, then close the drawer
             drawerListView.setItemChecked(position, true);
             drawerListView.setSelection(position);
-            setTitle("Kitap");
+            toolbar.setTitle("Kitap");
         }
         drawerLayout.closeDrawer(linearLayout);
     }

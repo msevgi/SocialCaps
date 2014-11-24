@@ -27,5 +27,6 @@
         android:src="@drawable/ic_action_content_new"
         fab:fab_colorNormal="#2879A9"
         fab:fab_colorPressed="#0000dd"
-        fab:fab_colorRipple="#00000f" />
+        fab:fab_colorRipple="#5000"
+        android:transitionName="create_caps" />
 </RelativeLayout>

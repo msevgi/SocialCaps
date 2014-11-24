@@ -1,4 +1,4 @@
-package com.mustafasevgi.socialcaps;
+package com.mustafasevgi.socialcaps.view;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -6,6 +6,8 @@ import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.widget.TextView;
+
+import com.mustafasevgi.socialcaps.R;
 
 /**
  * A custom Text View that lowers the text size when the text is to big for the TextView. Modified version of one found on stackoverflow

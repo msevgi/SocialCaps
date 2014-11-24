@@ -1,9 +1,8 @@
-package com.mustafasevgi.socialcaps;
+package com.mustafasevgi.socialcaps.activity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
@@ -12,6 +11,8 @@ import android.text.TextWatcher;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.mustafasevgi.socialcaps.HandleMemeWriteBounds;
+import com.mustafasevgi.socialcaps.R;
 import com.soundcloud.android.crop.Crop;
 
 import java.io.File;
@@ -27,11 +28,15 @@ public class CreateActivity extends BaseActionBarActivity implements TextWatcher
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_create_caps);
         imageViewCaps = (ImageView) findViewById(R.id.imageview_caps);
         editTextCaps = (EditText) findViewById(R.id.edittext_caps);
-        Crop.pickImage(CreateActivity.this);
+//        Crop.pickImage(CreateActivity.this);
         editTextCaps.addTextChangedListener(this);
+    }
+
+    @Override
+    public int getLayoutResource() {
+        return R.layout.layout_create_caps;
     }
 
     @Override

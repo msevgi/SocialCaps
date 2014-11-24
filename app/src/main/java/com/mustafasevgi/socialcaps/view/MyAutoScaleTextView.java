@@ -3,15 +3,13 @@ package com.mustafasevgi.socialcaps.view;
 import android.content.Context;
 import android.util.AttributeSet;
 
-import com.mustafasevgi.socialcaps.AutoScaleTextView;
+public class MyAutoScaleTextView extends AutoScaleTextView {
 
-public class MyAutoScaleView extends AutoScaleTextView {
-
-    public MyAutoScaleView(Context context, AttributeSet attrs) {
+    public MyAutoScaleTextView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public MyAutoScaleView(Context context, AttributeSet attrs, int defStyle) {
+    public MyAutoScaleTextView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
     }
 
