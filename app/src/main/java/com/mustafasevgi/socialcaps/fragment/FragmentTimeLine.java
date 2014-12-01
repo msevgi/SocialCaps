@@ -1,4 +1,4 @@
-package com.mustafasevgi.socialcaps;
+package com.mustafasevgi.socialcaps.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +13,9 @@ import android.view.ViewGroup;
 
 import com.baoyz.widget.PullRefreshLayout;
 import com.melnykov.fab.FloatingActionButton;
+import com.mustafasevgi.socialcaps.R;
+import com.mustafasevgi.socialcaps.activity.CreateCapsActivity1;
+import com.mustafasevgi.socialcaps.adapter.TimeLineAdapter;
 import com.mustafasevgi.socialcaps.activity.CreateCapsActivity;
 
 import java.util.ArrayList;
@@ -60,7 +63,7 @@ public class FragmentTimeLine extends BaseFragment implements PullRefreshLayout.
 
     @Override
     public void onClick(View v) {
-        Intent intent = new Intent(getActivity(), CreateCapsActivity.class);
+        Intent intent = new Intent(getActivity(), CreateCapsActivity1.class);
         ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(), floatingActionButton, "create_caps");
         ActivityCompat.startActivity(getActivity(), intent, options.toBundle());
     }

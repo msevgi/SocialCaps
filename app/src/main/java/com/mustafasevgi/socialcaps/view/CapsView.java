@@ -4,14 +4,17 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.mustafasevgi.socialcaps.R;
+import com.mustafasevgi.socialcaps.event.CapsImageClickModel;
+import com.mustafasevgi.socialcaps.provider.BusProvider;
 
 
 @SuppressWarnings("UnusedDeclaration")
-public class CapsView extends FrameLayout {
+public class CapsView extends FrameLayout implements View.OnClickListener {
 
     private ImageView imageView;
     private MyAutoScaleTextView textView;
@@ -35,10 +38,11 @@ public class CapsView extends FrameLayout {
     }
 
     private void init() {
-        inflate(getContext(), R.layout.meme_view, this);
+        inflate(getContext(), R.layout.caps_view, this);
 
-        imageView = (ImageView) findViewById(R.id.imageview_meme);
-        textView = (MyAutoScaleTextView) findViewById(R.id.textview_meme);
+        imageView = (ImageView) findViewById(R.id.imageview_caps);
+        imageView.setOnClickListener(this);
+        textView = (MyAutoScaleTextView) findViewById(R.id.textview_caps);
     }
 
     public void setImageBitmap(Bitmap bitmap) {
@@ -59,5 +63,14 @@ public class CapsView extends FrameLayout {
 
     public void setText(CharSequence text) {
         textView.setText(text);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.imageview_caps:
+                BusProvider.getInstance().post(new CapsImageClickModel());
+                break;
+        }
     }
 }

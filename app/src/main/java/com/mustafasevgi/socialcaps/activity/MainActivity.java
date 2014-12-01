@@ -12,10 +12,10 @@ import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
 
-import com.mustafasevgi.socialcaps.FragmentTimeLine;
-import com.mustafasevgi.socialcaps.NavigationDrawerExpandableListViewAdapter;
+import com.mustafasevgi.socialcaps.fragment.FragmentTimeLine;
+import com.mustafasevgi.socialcaps.adapter.NavigationDrawerExpandableListViewAdapter;
 import com.mustafasevgi.socialcaps.R;
-import com.mustafasevgi.socialcaps.event_model.LeftGroupImageClickModel;
+import com.mustafasevgi.socialcaps.event.LeftGroupImageClickModel;
 import com.squareup.otto.Subscribe;
 
 

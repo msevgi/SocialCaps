@@ -1,4 +1,4 @@
-package com.mustafasevgi.socialcaps;
+package com.mustafasevgi.socialcaps.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;

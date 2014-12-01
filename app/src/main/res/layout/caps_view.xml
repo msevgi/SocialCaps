@@ -3,12 +3,13 @@
     android:layout_height="match_parent">
 
     <com.mustafasevgi.socialcaps.view.SquareImageView
-        android:id="@+id/imageview_meme"
+        android:id="@+id/imageview_caps"
         android:layout_width="match_parent"
-        android:layout_height="0dp" />
+        android:layout_height="0dp"
+        android:background="@drawable/plus" />
 
     <com.mustafasevgi.socialcaps.view.MyAutoScaleTextView
-        android:id="@+id/textview_meme"
+        android:id="@+id/textview_caps"
         android:layout_width="match_parent"
         android:layout_gravity="bottom"
         android:layout_height="0dp"

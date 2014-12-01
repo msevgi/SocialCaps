@@ -1,4 +1,4 @@
-package com.mustafasevgi.socialcaps;
+package com.mustafasevgi.socialcaps.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

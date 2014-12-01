@@ -9,18 +9,20 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
-import android.widget.ImageView;
 
 import com.mustafasevgi.socialcaps.HandleMemeWriteBounds;
 import com.mustafasevgi.socialcaps.R;
+import com.mustafasevgi.socialcaps.event.CapsImageClickModel;
+import com.mustafasevgi.socialcaps.view.CapsView;
 import com.soundcloud.android.crop.Crop;
+import com.squareup.otto.Subscribe;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 
 public class CreateActivity extends BaseActionBarActivity implements TextWatcher {
-    private ImageView imageViewCaps;
     private EditText editTextCaps;
+    private CapsView capsView;
 
     private Uri outputUri;
     private Uri source1;
@@ -28,7 +30,8 @@ public class CreateActivity extends BaseActionBarActivity implements TextWatcher
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        imageViewCaps = (ImageView) findViewById(R.id.imageview_caps);
+
+        capsView = (CapsView) findViewById(R.id.capsview);
         editTextCaps = (EditText) findViewById(R.id.edittext_caps);
 //        Crop.pickImage(CreateActivity.this);
         editTextCaps.addTextChangedListener(this);
@@ -36,7 +39,7 @@ public class CreateActivity extends BaseActionBarActivity implements TextWatcher
 
     @Override
     public int getLayoutResource() {
-        return R.layout.layout_create_caps;
+        return 0;
     }
 
     @Override
@@ -107,7 +110,7 @@ public class CreateActivity extends BaseActionBarActivity implements TextWatcher
                     "androidnation.ttf");
             HandleMemeWriteBounds handleMemeWriteBounds = new HandleMemeWriteBounds(bitmapImage, custom_font);
             Bitmap bitmap = handleMemeWriteBounds.generateImage("ds", "fge");
-            imageViewCaps.setImageBitmap(bitmap);
+            capsView.setImageBitmap(bitmap);
 //            Canvas comboImage = new Canvas(bitmapImage);
 //            comboImage.drawBitmap(bitmapImage, 0f, 0f, null);
 //            comboImage.drawBitmap(bitmapEditText, 0f, bitmapImage.getHeight() - bitmapEditText.getHeight(), null);
@@ -117,5 +120,10 @@ public class CreateActivity extends BaseActionBarActivity implements TextWatcher
         }
 
         return bitmapImage;
+    }
+
+    @Subscribe
+    public void capsImageClick(CapsImageClickModel model) {
+        Crop.pickImage(CreateActivity.this);
     }
 }

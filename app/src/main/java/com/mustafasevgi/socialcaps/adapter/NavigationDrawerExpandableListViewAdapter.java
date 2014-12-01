@@ -1,4 +1,4 @@
-package com.mustafasevgi.socialcaps;
+package com.mustafasevgi.socialcaps.adapter;
 
 import android.app.Activity;
 import android.view.LayoutInflater;
@@ -9,7 +9,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
-import com.mustafasevgi.socialcaps.event_model.LeftGroupImageClickModel;
+import com.mustafasevgi.socialcaps.R;
+import com.mustafasevgi.socialcaps.event.LeftGroupImageClickModel;
+import com.mustafasevgi.socialcaps.model.Category;
 import com.mustafasevgi.socialcaps.provider.BusProvider;
 
 import java.util.ArrayList;

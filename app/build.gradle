@@ -21,11 +21,18 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+    //pulldownto refresh listview
     compile project(":library")
     compile 'com.android.support:support-v4:21.0.0'
     compile "com.android.support:appcompat-v7:21.0.0"
     compile 'com.squareup:otto:1.3.5'
+    //circle imageview
     compile 'de.hdodenhof:circleimageview:1.2.0'
+    //floating button
     compile 'com.melnykov:floatingactionbutton:1.0.6'
+    //crop library
     compile 'com.soundcloud.android:android-crop:0.9.10@aar'
+    //alert library
+    compile 'com.nineoldandroids:library:2.4.0'
+    compile 'com.github.sd6352051.niftydialogeffects:niftydialogeffects:1.0.0@aar'
 }

@@ -1,4 +1,4 @@
-package com.mustafasevgi.socialcaps.event_model;
+package com.mustafasevgi.socialcaps.event;
 
 /**
  * Created by mustafasevgi on 09/11/14.
